@@ -178,6 +178,18 @@ class Client
 		return $result;
 	}
 
+	public function deleteLabel($body)
+	{
+		$label_request = [
+			'hdr' => $this->generateHeader('DELETESHIPMENT'),
+			'bd' => $body
+		];
+
+		$result = $this->curlPostRequest(__FUNCTION__, 'rest/v2/Label/Delete', ['deleteShipmentReq' => $label_request]);
+
+		return $result;
+	}
+
 	public function trackItem($body)
 	{
 		$track_item_request = [
