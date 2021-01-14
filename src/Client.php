@@ -144,15 +144,20 @@ class Client
 		$this->access_token = $access_token;
 	}
 
+	protected function generateHeader($message_type)
+	{
+		return [
+			'messageType' => $message_type,
+			'messageDateTime' => (new \DateTime())->format('c'),
+			'messageVersion' => '1.4',
+			'accessToken' => $this->access_token
+		];
+	}
+
 	public function createLabel($body)
 	{
 		$label_request = [
-			'hdr' => [
-				'messageType' => 'LABEL',
-				'messageDateTime' => (new \DateTime())->format('c'),
-				'messageVersion' => '1.4',
-				'accessToken' => $this->access_token
-			],
+			'hdr' => $this->generateHeader('LABEL'),
 			'bd' => $body
 		];
 
@@ -164,12 +169,7 @@ class Client
 	public function reprintLabel($body)
 	{
 		$label_reprint_request = [
-			'hdr' => [
-				'messageType' => 'LABELREPRINT',
-				'messageDateTime' => (new \DateTime())->format('c'),
-				'messageVersion' => '1.4',
-				'accessToken' => $this->access_token
-			],
+			'hdr' => $this->generateHeader('LABELREPRINT'),
 			'bd' => $body
 		];
 
@@ -181,12 +181,7 @@ class Client
 	public function trackItem($body)
 	{
 		$track_item_request = [
-			'hdr' => [
-				'messageType' => 'TRACKITEM',
-				'messageDateTime' => (new \DateTime())->format('c'),
-				'messageVersion' => '1.4',
-				'accessToken' => $this->access_token
-			],
+			'hdr' => $this->generateHeader('TRACKITEM'),
 			'bd' => $body
 		];
 
